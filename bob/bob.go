@@ -9,9 +9,13 @@ import (
 // Hey ...
 func Hey(remark string) string {
 	in := stripWhitespaces(remark)
+
+	if strings.HasSuffix(in, ".") {
+		return "Whatever."
+	}
+
 	yells := isYelling(in)
 	asks := isAsking(in)
-
 	if yells && asks {
 		return "Calm down, I know what I'm doing!"
 	}
@@ -39,11 +43,6 @@ func stripWhitespaces(remark string) string {
 
 func isYelling(in string) (isYelling bool) {
 	hasLowerCases := false
-
-	if strings.HasSuffix(in, ".") {
-		isYelling = false
-		return
-	}
 
 	chars := strings.Replace(in, "!", "", -1)
 	chars = strings.Replace(chars, ".", "", -1)
