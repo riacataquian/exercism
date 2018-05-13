@@ -32,13 +32,9 @@ func Hey(remark string) string {
 }
 
 func stripWhitespaces(remark string) string {
-	str := strings.Replace(remark, " ", "", -1)
-	str = strings.Trim(str, " ")
-	str = strings.Trim(str, "\t")
-	str = strings.Trim(str, "\r")
-	str = strings.Trim(str, "\n")
-
-	return str
+	return strings.TrimFunc(remark, func(r rune) bool {
+		return unicode.IsSpace(r)
+	})
 }
 
 func isYelling(in string) (isYelling bool) {
