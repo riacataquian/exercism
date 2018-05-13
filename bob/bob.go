@@ -1,4 +1,4 @@
-// package bob ...
+// package bob handles and processes responses by Bob.
 package bob
 
 import (
@@ -6,16 +6,20 @@ import (
 	"unicode"
 )
 
-// Hey ...
+// DefaultResponse is Bob's default response if remark is not asking, yelling or is silent.
+const DefaultResponse = "Whatever."
+
+// Hey returns response relative to Bob's remark.
 func Hey(remark string) string {
 	in := stripWhitespaces(remark)
-
 	if strings.HasSuffix(in, ".") {
-		return "Whatever."
+		return DefaultResponse
 	}
 
 	yells := isYelling(in)
 	asks := isAsking(in)
+	silence := in == ""
+
 	if yells && asks {
 		return "Calm down, I know what I'm doing!"
 	}
@@ -28,11 +32,11 @@ func Hey(remark string) string {
 		return "Sure."
 	}
 
-	if in == "" {
+	if silence {
 		return "Fine. Be that way!"
 	}
 
-	return "Whatever."
+	return DefaultResponse
 }
 
 func stripWhitespaces(remark string) string {
@@ -41,29 +45,25 @@ func stripWhitespaces(remark string) string {
 	})
 }
 
+// isYelling loops through the input string then scans for lowercase letters,
+// if found, considered `in` as not yelling.
+// func isYelling(in string) (isYelling bool) {
 func isYelling(in string) (isYelling bool) {
-	hasLowerCases := false
-
-	chars := strings.Replace(in, "!", "", -1)
-	chars = strings.Replace(chars, ".", "", -1)
-	for _, r := range chars {
+	for _, r := range in {
 		if unicode.IsLetter(r) {
 			if unicode.IsUpper(r) {
 				isYelling = true
 			} else {
-				hasLowerCases = true
+				isYelling = false
+				break
 			}
 		}
-	}
-
-	if hasLowerCases {
-		isYelling = false
-		return
 	}
 
 	return
 }
 
+// isAsking considers inputs with "?" as suffix to be asking.
 func isAsking(in string) bool {
 	return strings.HasSuffix(in, "?")
 }
