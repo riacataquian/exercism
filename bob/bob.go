@@ -2,61 +2,73 @@
 package bob
 
 import (
-	"fmt"
 	"strings"
 	"unicode"
 )
 
 // Hey ...
 func Hey(remark string) string {
-	yells := isYelling(remark)
-	asks := isAsking(remark)
+	in := stripWhitespaces(remark)
+	yells := isYelling(in)
+	asks := isAsking(in)
 
 	if yells && asks {
-		fmt.Printf("YELLING & ASKING %s\n", remark)
 		return "Calm down, I know what I'm doing!"
 	}
 
 	if yells {
-		fmt.Printf("YELLING %s\n", remark)
 		return "Whoa, chill out!"
 	}
 
 	if asks {
-		fmt.Printf("ASKING %s\n", remark)
 		return "Sure."
 	}
 
-	fmt.Printf("MEH %s\n", remark)
+	if in == "" {
+		return "Fine. Be that way!"
+	}
+
 	return "Whatever."
 }
 
-func isYelling(in string) bool {
-	in = strimSpace(in)
-	isYelling := true
-	hasNumbers := false
+func stripWhitespaces(remark string) string {
+	str := strings.Replace(remark, " ", "", -1)
+	str = strings.Trim(str, " ")
+	str = strings.Trim(str, "\t")
+	str = strings.Trim(str, "\r")
+	str = strings.Trim(str, "\n")
 
-	for _, l := range in {
-		if unicode.IsDigit(l) {
-			hasNumbers = true
-		}
+	return str
+}
 
-		if unicode.IsLower(l) && string(l) != "!" && string(l) != "?" {
-			isYelling = false
+func isYelling(in string) (isYelling bool) {
+	hasLowerCases := false
+
+	if strings.HasSuffix(in, ".") {
+		isYelling = false
+		return
+	}
+
+	chars := strings.Replace(in, "!", "", -1)
+	chars = strings.Replace(chars, ".", "", -1)
+	for _, r := range chars {
+		if unicode.IsLetter(r) {
+			if unicode.IsUpper(r) {
+				isYelling = true
+			} else {
+				hasLowerCases = true
+			}
 		}
 	}
 
-	if hasNumbers {
-		isYelling = strings.Contains(in, "!")
+	if hasLowerCases {
+		isYelling = false
+		return
 	}
 
-	return isYelling
+	return
 }
 
 func isAsking(in string) bool {
 	return strings.HasSuffix(in, "?")
-}
-
-func strimSpace(in string) string {
-	return strings.Replace(in, " ", "", -1)
 }
