@@ -1,4 +1,4 @@
 # Exercism
 
-[ ] Gigasecond
-[x] Bob
+- [ ] Gigasecond
+- [x] Bob
