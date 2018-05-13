@@ -46,17 +46,15 @@ func isYelling(in string) bool {
 		}
 	}
 
-	if hasNumbers && isYelling {
-		isYelling = true
+	if hasNumbers {
+		isYelling = strings.Contains(in, "!")
 	}
 
 	return isYelling
 }
 
 func isAsking(in string) bool {
-	in = strimSpace(in)
-
-	return strings.Contains(in, "?")
+	return strings.HasSuffix(in, "?")
 }
 
 func strimSpace(in string) string {
