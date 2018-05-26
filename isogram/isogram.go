@@ -1,4 +1,4 @@
-// Package isogram ...
+// Package isogram encapsulate functions and helpers for dealing with isograms.
 package isogram
 
 import (
@@ -6,9 +6,10 @@ import (
 	"unicode"
 )
 
+// charset holds the existing characters.
 var charset map[string]bool
 
-// IsIsogram ...
+// IsIsogram determines if a word or phrase is an isogram.
 func IsIsogram(word string) bool {
 	if word == "" {
 		return true
