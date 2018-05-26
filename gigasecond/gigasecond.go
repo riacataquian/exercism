@@ -1,4 +1,3 @@
-// This is a "stub" file.  It's a little start on your solution.
 // Package gigasecond calculates the moment when someone has lived for 10^9 seconds.
 package gigasecond
 
