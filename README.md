@@ -13,7 +13,7 @@
 - [x] Raindrops (TIL: did the lookups table via map at first but intermittently fails due to concurrent access. Used a struct instead.)
 - [x] Scrabble Score
 - [x] Isogram
-- [x] Reverse String (TIL: it is unsafe to directly get a rune from a string given an arbitrary index since Go's string type stores the UTF-8 encoded byte sequence of the text, to do that, decode the bytes first.)
+- [x] Reverse String (TIL: it is unsafe to directly get a rune from a string given an arbitrary index since Go's string type stores the UTF-8 encoded byte sequence of the text, to do that, decode the bytes first. (e.g., `fmt.Println(len("Hello, ??")), len([]rune("Hello, ??")))`))
 - [ ] Difference Of Squares
 - [ ] Luhn
 - [ ] Grains
