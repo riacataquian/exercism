@@ -7,26 +7,30 @@ import (
 	"strconv"
 )
 
-// rd describes a raindrop language.
-var rd map[int]string
+// kv maps factor to its speak equivalent.
+type kv struct {
+	factor int
+	speak  string
+}
+
+var lookup = []kv{
+	{3, "Pling"},
+	{5, "Plang"},
+	{7, "Plong"},
+}
 
 // Convert calculates for the number's factor and
 // returns the appropriate raindrop speak.
 func Convert(n int) string {
-	rd = make(map[int]string)
-	rd[3] = "Pling"
-	rd[5] = "Plang"
-	rd[7] = "Plong"
-
 	var speak string
-	for k, v := range rd {
-		if n == k {
-			speak += v
+	for _, l := range lookup {
+		if n == l.factor {
+			speak += l.speak
 			break
 		}
 
-		if n%k == 0 {
-			speak += v
+		if n%l.factor == 0 {
+			speak += l.speak
 		}
 	}
 
