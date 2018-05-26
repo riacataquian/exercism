@@ -1,7 +1,7 @@
 language: go
 
 go:
-  -"1.10.x"
+  - "1.10.x"
 
 install: true
 
@@ -13,9 +13,9 @@ jobs:
   include:
     - stage: build
       script:
-         - go get -u golang.org/x/lint/golint
+        - go get -u golang.org/x/lint/golint
         - ./build.sh
     - stage: spelling
-       script:
+      script:
         - go get -u github.com/client9/misspell/cmd/misspell
-        - misspell -error 
+        - misspell -error .
