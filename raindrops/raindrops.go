@@ -1,4 +1,4 @@
-// Package raindrops converst a number to a string,
+// Package raindrops converts a number to a string,
 // the contents of which depend on the number's factors.
 // http://exercism.io/exercises/go/raindrops/readme
 package raindrops
