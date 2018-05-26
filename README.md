@@ -1,6 +1,6 @@
 # Exercism
 
-[![Build Status](https://semaphoreci.com/api/v1/riacataquian/exercism/branches/master/shields_badge.svg)](https://semaphoreci.com/riacataquian/exercism)
+[![Build Status](https://travis-ci.com/riacataquian/exercism.svg?branch=master)](https://travis-ci.com/riacataquian/exercism)
 
 - [x] Gigasecond
 - [x] Bob
