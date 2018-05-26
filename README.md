@@ -12,3 +12,89 @@
 - [x] Hamming
 - [x] Raindrops (TIL: did the lookups table via map at first but intermittently fails due to concurrent access. Used a struct instead.)
 - [x] Scrabble Score
+- [x] Isogram
+- [ ] Reverse String
+- [ ] Difference Of Squares
+- [ ] Luhn
+- [ ] Grains
+- [ ] Clock
+- [ ] Parallel Letter Frequency
+- [ ] Tree Building
+- [ ] Robot Name
+- [ ] Tournament
+- [ ] Twelve Days
+- [ ] Matrix
+- [ ] Sublist
+- [ ] Error Handling
+- [ ] Flatten Array
+- [ ] Bank Account
+- [ ] Paasio
+- [ ] Leap
+- [ ] Accumulate
+- [ ] Triangle
+- [ ] Secret Handshake
+- [ ] House
+- [ ] Pascals Triangle
+- [ ] Series
+- [ ] Queen Attack
+- [ ] Etl
+- [ ] Sum of Multiples
+- [ ] Pythagorean Triplet
+- [ ] Pangram
+- [ ] Crypto Squae
+- [ ] Food Chain
+- [ ] Largest Series Product
+- [ ] Sieve
+- [ ] Palindrome Products
+- [ ] Scale Generator
+- [ ] Protein Translation
+- [ ] Perfect Numbers
+- [ ] Bracket Push
+- [ ] Anagram
+- [ ] Word Count
+- [ ] Allergies
+- [ ] Rail Fence Cipher
+- [ ] Rna Transciption
+- [ ] Roman Numerals
+- [ ] Say
+- [ ] Circular Buffer
+- [ ] Diamond
+- [ ] React
+- [ ] Custom Set
+- [ ] Atbash Cipher
+- [ ] Phone Number
+- [ ] Strain
+- [ ] Pig Latin
+- [ ] Prime Factors
+- [ ] Armstrong Numbers
+- [ ] Transpose
+- [ ] Nth Prime
+- [ ] Diffie Hellman
+- [ ] Beer Song
+- [ ] Ocr Numbers
+- [ ] Wordy
+- [ ] Nucleotide Count
+- [ ] Grade School
+- [ ] Saddle Points
+- [ ] Meetup
+- [ ] Simple Linked List
+- [ ] Binary Search
+- [ ] Binary Search Tree
+- [ ] Kindergarten Garden
+- [ ] Simple Cipher
+- [ ] Pov
+- [ ] Minesweeper
+- [ ] Roboto Simulator
+- [ ] All Your Base
+- [ ] Connect
+- [ ] Ledger
+- [ ] Markdown
+- [ ] Yacht
+- [ ] Poker
+- [ ] Variable Length Quantity
+- [ ] Change
+- [ ] Forth
+- [ ] Bowling 
+- [ ] Run Length Encoding 
+- [ ] Collatz Conjecture
+..... more.
