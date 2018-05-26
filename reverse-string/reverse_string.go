@@ -1,24 +1,16 @@
-// package reverse ...
+// package reverse a given string.
 package reverse
 
-import (
-	"unicode/utf8"
-)
-
-// String ...
+// String converts str to rune slices for later reversing.
 func String(str string) string {
 	if str == "" {
 		return str
 	}
 
 	// convert string to a rune slice.
-	var rs []rune
-	for _, s := range str {
-		r, _ := utf8.DecodeRuneInString(string(s))
-		rs = append(rs, r)
-	}
-
+	rs := []rune(str)
 	max := len(rs) - 1
+
 	var reversed []rune
 	for i, _ := range rs {
 		reversed = append(reversed, rs[max-i])
