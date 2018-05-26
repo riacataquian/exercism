@@ -1,31 +1,32 @@
-// Package scrabble ...
+// Package scrabble given a word, compute the scrabble score for that word.
 package scrabble
 
 import (
 	"strings"
-	// "sync"
 )
 
-// Score ...
-// TODO optimize for 1 chars
-func Score(str string) int {
+// Score performs the calculation of the score per character of a given word.
+func Score(word string) int {
 	ref := buildLookup()
+	str := strings.ToUpper(word)
+
+	// nit: optimization
+	if len(str) == 1 {
+		return ref[str]
+	}
 
 	var score int
 	for _, r := range str {
 		// r is in rune type, cast to string.
-		char := strings.ToUpper(string(r))
-		score += ref[char]
+		score += ref[string(r)]
 	}
 
 	return score
 }
 
+// buildLookup prepares and build the lookup table of alphabets and their scrabled score equivalents.
 func buildLookup() map[string]int {
 	var lookup = make(map[string]int)
-	// var mutex = &sync.Mutex{}
-
-	// mutex.Lock()
 	lookup["A"] = 1
 	lookup["B"] = 3
 	lookup["C"] = 3
@@ -52,7 +53,5 @@ func buildLookup() map[string]int {
 	lookup["X"] = 8
 	lookup["Y"] = 4
 	lookup["Z"] = 10
-	// mutex.Unlock()
-
 	return lookup
 }
