@@ -8,9 +8,9 @@ import (
 
 // Distance calcualtes difference between a and b stands.
 func Distance(a, b string) (int, error) {
-	// Prevent unmatched strand lenghts
+	// Prevent unmatched strand lengths
 	if len(a) != len(b) {
-		return -1, errors.New("Mismatched lenghts")
+		return -1, errors.New("Mismatched lengths")
 	}
 
 	// If strands matched, then return 0 diff.
