@@ -13,7 +13,7 @@
 - [x] Raindrops (TIL: did the lookups table via map at first but intermittently fails due to concurrent access. Used a struct instead.)
 - [x] Scrabble Score
 - [x] Isogram
-- [ ] Reverse String
+- [x] Reverse String
 - [ ] Difference Of Squares
 - [ ] Luhn
 - [ ] Grains
