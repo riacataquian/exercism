@@ -10,4 +10,4 @@
 - [x] Twofer: Demonstrates the use of example files, see example_two_fer_test.go.
   Run `godoc -http :8000` to see package documentation and example.
 - [x] Hamming
-- [x] Raindrops
+- [x] Raindrops (TIL: did the lookups table via map at first but intermittently fails due to concurrent access. Used a struct instead.)
