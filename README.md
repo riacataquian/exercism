@@ -1,5 +1,7 @@
 # Exercism
 
+[![Build Status](https://semaphoreci.com/api/v1/riacataquian/exercism/branches/master/shields_badge.svg)](https://semaphoreci.com/riacataquian/exercism)
+
 - [ ] Gigasecond
 - [x] Bob
 - [x] Acronym
