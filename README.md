@@ -15,7 +15,7 @@
 - [x] Isogram
 - [x] Reverse String (TIL: it is unsafe to directly get a rune from a string given an arbitrary index since Go's string type stores the UTF-8 encoded byte sequence of the text, to do that, decode the bytes first. (e.g., `fmt.Println(len("Hello, ??")), len([]rune("Hello, ??")))`))
 - [x] Difference Of Squares
-- [ ] Luhn
+- [x] Luhn
 - [ ] Grains
 - [ ] Clock
 - [ ] Parallel Letter Frequency
