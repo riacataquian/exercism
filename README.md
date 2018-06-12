@@ -17,7 +17,7 @@
 - [x] Difference Of Squares
 - [x] Luhn
 - [x] Grains
-- [ ] Clock
+- [x] Clock: `%02d` fmt verb, example test file.
 - [ ] Parallel Letter Frequency
 - [ ] Tree Building
 - [ ] Robot Name
