@@ -22,12 +22,18 @@ func New(hour, min int) Clock {
 	rmin := min % maxMin
 	if rmin < 0 {
 		rmin += maxMin
-		hour--
+		hour-- // offset
 	}
 
+	// hoursPerMins is the count of hours given a minute.
 	hoursPerMins := min / maxMin
+
+	// totalHours is the remainder of sum of hours and hoursPerMins after dividing it to maxHour (or a day),
+	// we only care about the remainder.
 	totalHours := (hour + hoursPerMins) % maxHour
 	if totalHours < 0 {
+		// If total hours is less than 0, it is a negative number.
+		// Add to maxHour (24) to compute for the diff.
 		totalHours += maxHour
 	}
 
