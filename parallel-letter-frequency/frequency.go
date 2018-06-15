@@ -1,10 +1,10 @@
-// Package letter ...
+// Package letter counts the frequency of letters in texts using parallel computation.
 package letter
 
-// FreqMap ...
+// FreqMap maps runes and their frequency counts.
 type FreqMap map[rune]int
 
-// Frequency ...
+// Frequency counts the runes and their frequency synchronously.
 func Frequency(s string) FreqMap {
 	m := FreqMap{}
 	for _, r := range s {
@@ -13,7 +13,7 @@ func Frequency(s string) FreqMap {
 	return m
 }
 
-// ConcurrentFrequency ...
+// ConcurrentFrequency counts the runes and their frequency concurrently.
 func ConcurrentFrequency(strs []string) FreqMap {
 	return FreqMap{}
 }
