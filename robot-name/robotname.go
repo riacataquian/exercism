@@ -25,7 +25,7 @@ func init() {
 // Generates a new name for robots without names yet.
 func (r *Robot) Name() string {
 	if r.name == "" {
-		r.name = RandStringBytes(2) + strconv.Itoa(RandInt(3))
+		r.name = RandStringBytes() + strconv.Itoa(RandInt())
 	}
 	return r.name
 }
@@ -36,8 +36,10 @@ func (r *Robot) Reset() {
 }
 
 // RandStringBytes generate random string bytes from LetterBytes.
-func RandStringBytes(n int) string {
-	b := make([]byte, n)
+//
+// Returns a 2 character string.
+func RandStringBytes() string {
+	b := make([]byte, 2)
 	max := len(LetterBytes)
 	for i := range b {
 		b[i] = LetterBytes[rand.Intn(max)]
@@ -45,9 +47,12 @@ func RandStringBytes(n int) string {
 	return string(b)
 }
 
-// RandInt generate a random int from 0...999.
-func RandInt(n int) int {
+// RandInt generate a random int from 100...999.
+//
+// Returns a 3 int.
+func RandInt() int {
 	r := rand.Intn(999)
+	// Prevent values from 0 to 99.
 	for r < 100 {
 		r = rand.Intn(999)
 	}
