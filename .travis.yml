@@ -3,7 +3,8 @@ language: go
 go:
   - "1.10.x"
 
-install: true
+install:
+  - go get github.com/kylelemons/godebug/pretty
 
 before_install:
   - chmod +x build.sh
