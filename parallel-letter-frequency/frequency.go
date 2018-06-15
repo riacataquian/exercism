@@ -24,16 +24,32 @@ func Frequency(s string) FreqMap {
 }
 
 // ConcurrentFrequency counts the runes and their frequency concurrently.
-func ConcurrentFrequency(strs []string) FreqMap {
-	c := SafeCounter{v: make(FreqMap)}
+// func ConcurrentFrequency(strs []string) FreqMap {
+// 	c := SafeCounter{v: make(FreqMap)}
 
-	for _, str := range strs {
-		for _, s := range str {
-			go c.Inc(s)
-		}
+// 	for _, str := range strs {
+// 		for _, s := range str {
+// 			go c.Inc(s)
+// 		}
+// 	}
+
+// 	return c.v
+// }
+func ConcurrentFrequency(strs []string) FreqMap {
+	c := make(chan FreqMap)
+	for _, s := range strs {
+		go func(s string) {
+			c <- Frequency(s)
+		}(s)
 	}
 
-	return c.v
+	m := FreqMap{}
+	for range strs {
+		for r, f := range <-c {
+			m[r] += f
+		}
+	}
+	return m
 }
 
 // Inc increments a key's count.
