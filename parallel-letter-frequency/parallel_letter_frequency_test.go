@@ -1,8 +1,9 @@
 package letter
 
 import (
-	"reflect"
 	"testing"
+
+	"github.com/kylelemons/godebug/pretty"
 )
 
 // In the separate file frequency.go, you are given a function, Frequency(),
@@ -42,9 +43,10 @@ O'er the land of the free and the home of the brave?`
 
 func TestConcurrentFrequency(t *testing.T) {
 	seq := Frequency(euro + dutch + us)
-	con := ConcurrentFrequency([]string{euro, dutch, us})
-	if !reflect.DeepEqual(con, seq) {
-		t.Fatal("ConcurrentFrequency wrong result")
+	args := []string{euro, dutch, us}
+	con := ConcurrentFrequency(args)
+	if s := pretty.Compare(seq, con); s != "" {
+		t.Fatalf("ConcurrentFrequency(%v): Diff -got +want:\n %s", args, s)
 	}
 }
 
