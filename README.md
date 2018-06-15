@@ -20,7 +20,7 @@
 - [x] Clock: `%02d` fmt verb, example test file.
 - [ ] Parallel Letter Frequency
 - [ ] Tree Building
-- [ ] Robot Name
+- [x] Robot Name
 - [ ] Tournament
 - [ ] Twelve Days
 - [ ] Matrix
