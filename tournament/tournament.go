@@ -5,6 +5,7 @@ import (
 	"bytes"
 	"fmt"
 	"io"
+	"strings"
 )
 
 // Tally ...
@@ -14,7 +15,16 @@ func Tally(r io.Reader, w io.Writer) error {
 		return err
 	}
 
-	fmt.Println(b.String())
+	strs := strings.Split(b.String(), "\n")
+	var matches [][]string
+	for _, match := range strs {
+		m := strings.Split(match, ";")
+		if len(m) == 1 && m[0] == "" {
+			continue
+		}
+		matches = append(matches, m)
+	}
+	fmt.Println(matches)
 
 	return nil
 }
