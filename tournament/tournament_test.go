@@ -122,17 +122,17 @@ func TestTallyHappy(t *testing.T) {
 	}
 }
 
-// func TestTallyError(t *testing.T) {
-// 	for _, s := range errorTestCases {
-// 		reader := strings.NewReader(s)
-// 		var buffer bytes.Buffer
-// 		err := Tally(reader, &buffer)
-// 		if err == nil {
-// 			t.Fatalf("Tally for input %q should have failed but didn't.", s)
-// 		}
-// 		var _ error = err
-// 	}
-// }
+func TestTallyError(t *testing.T) {
+	for _, s := range errorTestCases {
+		reader := strings.NewReader(s)
+		var buffer bytes.Buffer
+		err := Tally(reader, &buffer)
+		if err == nil {
+			t.Fatalf("Tally for input %q should have failed but didn't.", s)
+		}
+		var _ error = err
+	}
+}
 
 func BenchmarkTally(b *testing.B) {
 	for i := 0; i < b.N; i++ {

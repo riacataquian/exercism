@@ -1,5 +1,6 @@
-// Package tournament ...
+// Package tournament tally the results of a small football competition.
 //
+// Semantics:
 // Bilthering Badgers win:
 // Allegoric Alaskans;Blithering Badgers;win
 //
@@ -14,60 +15,63 @@ package tournament
 
 import (
 	"bytes"
+	"errors"
 	"fmt"
 	"io"
 	"sort"
 	"strings"
-	// "unicode"
 )
 
-// Match ...
+// Match represents players and their score tables.
 type Match map[string]Table
 
-// Table ...
+// Table describes a score board.
 type Table struct {
-	// Matches Played
+	// Matches Played.
 	MP int
-	// Matches Won
+	// Matches Won.
 	W int
-	// Matches Drawn/Tied
+	// Matches Drawn/Tied.
 	D int
-	// Matches Lost
+	// Matches Lost.
 	L int
-	// Points
+	// Points.
 	P int
 }
 
-// Entry ...
-type Entry struct {
+// MatchTally maps players and their score tables.
+type MatchTally struct {
 	Player string
 	Table
 }
 
 // Tally ...
 func Tally(r io.Reader, w io.Writer) error {
+	// Read values from r.
 	var b bytes.Buffer
 	if _, err := io.Copy(&b, r); err != nil {
 		return err
 	}
 
 	strs := strings.Split(b.String(), "\n")
-	var matches = make(Match)
+	matches := make(Match)
 	for _, match := range strs {
+		// ; separates players and results.
 		m := strings.Split(match, ";")
+
+		// Ignore wrong formats.
 		if len(m) == 1 || m[0] == "" {
 			continue
+		}
+
+		// Tests expects an error if len is 2.
+		if len(m) == 2 {
+			return errors.New("wrong input format")
 		}
 
 		// Player 1 and 2 names.
 		p1 := strings.TrimSpace(m[0])
 		p2 := strings.TrimSpace(m[1])
-		// p1 := strings.TrimRightFunc(m[0], func(r rune) bool {
-		// 	return unicode.IsSpace(r)
-		// })
-		// p2 := strings.TrimRightFunc(m[1], func(r rune) bool {
-		// 	return unicode.IsSpace(r)
-		// })
 
 		// Player 1 and 2 score tables.
 		t1 := matches[p1]
@@ -77,6 +81,7 @@ func Tally(r io.Reader, w io.Writer) error {
 		t1.MP++
 		t2.MP++
 
+		// Increment scores accordingly.
 		switch m[2] {
 		case "win":
 			t1.W++
@@ -88,19 +93,21 @@ func Tally(r io.Reader, w io.Writer) error {
 
 			t2.W++
 			t2.P += 3
-		default: // draw
+		case "draw":
 			t1.D++
 			t2.D++
 
 			t1.P++
 			t2.P++
+		default:
+			return errors.New("unknown results")
 		}
 
 		matches[p1] = t1
 		matches[p2] = t2
 	}
 
-	err := writeTable(w, matches)
+	err := writeTable(w, sortByPoints(matches))
 	if err != nil {
 		return err
 	}
@@ -108,15 +115,21 @@ func Tally(r io.Reader, w io.Writer) error {
 	return nil
 }
 
-func writeTable(w io.Writer, matches map[string]Table) error {
+// writeTable writes tally to w.
+func writeTable(w io.Writer, matches []MatchTally) error {
+	// Write table header.
 	_, err := io.WriteString(w, "Team                           | MP |  W |  D |  L |  P\n")
 	if err != nil {
 		return err
 	}
 
-	for _, e := range sortByPoints(matches) {
+	// Write table body.
+	for _, e := range matches {
 		tpl := "%-31s| %2d | %2d | %2d | %2d | %2d\n"
 		s := fmt.Sprintf(tpl, e.Player, e.MP, e.W, e.D, e.L, e.P)
+		// Output:
+		// Player Name               | 1 | 2 | 3 | 4 | 5
+
 		_, err := io.WriteString(w, s)
 		if err != nil {
 			return err
@@ -126,11 +139,16 @@ func writeTable(w io.Writer, matches map[string]Table) error {
 	return nil
 }
 
-func sortByPoints(matches Match) []Entry {
-	slice := make([]Entry, 0, len(matches))
+// sortByPoints sorts tally by points.
+// For draw points, it alphabetically sorts the players name.
+func sortByPoints(matches Match) []MatchTally {
+	// Convert matches to slices for stable sorting.
+	// Maps in Go is being sorted randomly.
+	slice := make([]MatchTally, 0, len(matches))
 	for k, v := range matches {
-		slice = append(slice, Entry{k, v})
+		slice = append(slice, MatchTally{k, v})
 	}
+
 	sort.Slice(slice, func(i, j int) bool {
 		prev := slice[i].Table.P
 		next := slice[j].Table.P
@@ -142,5 +160,6 @@ func sortByPoints(matches Match) []Entry {
 
 		return prev > next
 	})
+
 	return slice
 }
