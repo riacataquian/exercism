@@ -21,7 +21,7 @@
 - [ ] Parallel Letter Frequency
 - [ ] Tree Building
 - [x] Robot Name
-- [ ] Tournament
+- [x] Tournament
 - [ ] Twelve Days
 - [ ] Matrix
 - [ ] Sublist
