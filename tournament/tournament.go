@@ -45,7 +45,7 @@ type MatchTally struct {
 	Table
 }
 
-// Tally ...
+// Tally parse data from r then writes match tally to w.
 func Tally(r io.Reader, w io.Writer) error {
 	// Read values from r.
 	var b bytes.Buffer
@@ -57,6 +57,7 @@ func Tally(r io.Reader, w io.Writer) error {
 	matches := make(Match)
 	for _, match := range strs {
 		// ; separates players and results.
+		// Expected format: ["player 1", "player 2", "win"]
 		m := strings.Split(match, ";")
 
 		// Ignore wrong formats.
