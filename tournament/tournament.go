@@ -16,6 +16,7 @@ import (
 	"bytes"
 	"fmt"
 	"io"
+	"sort"
 	"strings"
 )
 
@@ -38,8 +39,8 @@ type Table struct {
 
 // Entry ...
 type Entry struct {
-	player string
-	table  Table
+	Player string
+	Table
 }
 
 // Tally ...
@@ -92,28 +93,42 @@ func Tally(r io.Reader, w io.Writer) error {
 		matches[p2] = t2
 	}
 
-	printSorted(matches)
+	err := writeTable(w, matches)
+	if err != nil {
+		return err
+	}
 
 	return nil
 }
 
-// type byPoints []Entry
+func writeTable(w io.Writer, matches map[string]Table) error {
+	_, err := io.WriteString(w, "Team                           | MP |  W |  D |  L |  P\n")
+	if err != nil {
+		return err
+	}
 
-// func (d byPoints) Len() int {
-// 	return len(d)
-// }
-// func (d byPoints) Less(i, j int) bool {
-// 	return d[i].value.Priority < d[j].value.Priority
-// }
-// func (d byPoints) Swap(i, j int) {
-// 	d[i], d[j] = d[j], d[i]
-// }
+	for _, m := range sortByPoints(matches) {
+		_, err := io.WriteString(w, m.String()+"\n")
+		if err != nil {
+			return err
+		}
+	}
 
-func printSorted(matches Match) {
+	return nil
+}
+
+func (e Entry) String() string {
+	tpl := "%-31s| %2d | %2d | %2d | %2d | %2d"
+	return fmt.Sprintf(tpl, e.Player, e.MP, e.W, e.D, e.L, e.P)
+}
+
+func sortByPoints(matches Match) []Entry {
 	slice := make([]Entry, 0, len(matches))
 	for k, v := range matches {
-		fmt.Println(k)
 		slice = append(slice, Entry{k, v})
 	}
-	fmt.Println(slice)
+	sort.Slice(slice, func(i, j int) bool {
+		return slice[i].Table.P > slice[j].Table.P
+	})
+	return slice
 }
