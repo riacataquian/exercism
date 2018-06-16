@@ -18,6 +18,7 @@ import (
 	"io"
 	"sort"
 	"strings"
+	// "unicode"
 )
 
 // Match ...
@@ -54,13 +55,19 @@ func Tally(r io.Reader, w io.Writer) error {
 	var matches = make(Match)
 	for _, match := range strs {
 		m := strings.Split(match, ";")
-		if len(m) == 1 && m[0] == "" {
+		if len(m) == 1 || m[0] == "" {
 			continue
 		}
 
 		// Player 1 and 2 names.
-		p1 := m[0]
-		p2 := m[1]
+		p1 := strings.TrimSpace(m[0])
+		p2 := strings.TrimSpace(m[1])
+		// p1 := strings.TrimRightFunc(m[0], func(r rune) bool {
+		// 	return unicode.IsSpace(r)
+		// })
+		// p2 := strings.TrimRightFunc(m[1], func(r rune) bool {
+		// 	return unicode.IsSpace(r)
+		// })
 
 		// Player 1 and 2 score tables.
 		t1 := matches[p1]
@@ -107,8 +114,10 @@ func writeTable(w io.Writer, matches map[string]Table) error {
 		return err
 	}
 
-	for _, m := range sortByPoints(matches) {
-		_, err := io.WriteString(w, m.String()+"\n")
+	for _, e := range sortByPoints(matches) {
+		tpl := "%-31s| %2d | %2d | %2d | %2d | %2d\n"
+		s := fmt.Sprintf(tpl, e.Player, e.MP, e.W, e.D, e.L, e.P)
+		_, err := io.WriteString(w, s)
 		if err != nil {
 			return err
 		}
@@ -117,18 +126,21 @@ func writeTable(w io.Writer, matches map[string]Table) error {
 	return nil
 }
 
-func (e Entry) String() string {
-	tpl := "%-31s| %2d | %2d | %2d | %2d | %2d"
-	return fmt.Sprintf(tpl, e.Player, e.MP, e.W, e.D, e.L, e.P)
-}
-
 func sortByPoints(matches Match) []Entry {
 	slice := make([]Entry, 0, len(matches))
 	for k, v := range matches {
 		slice = append(slice, Entry{k, v})
 	}
 	sort.Slice(slice, func(i, j int) bool {
-		return slice[i].Table.P > slice[j].Table.P
+		prev := slice[i].Table.P
+		next := slice[j].Table.P
+
+		// If points are equal, sort player names alphabetically.
+		if prev == next {
+			return slice[j].Player > slice[i].Player
+		}
+
+		return prev > next
 	})
 	return slice
 }
