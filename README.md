@@ -18,7 +18,7 @@
 - [x] Luhn
 - [x] Grains
 - [x] Clock: `%02d` fmt verb, example test file.
-- [ ] Parallel Letter Frequency
+- [x] Parallel Letter Frequency
 - [ ] Tree Building
 - [x] Robot Name
 - [x] Tournament
