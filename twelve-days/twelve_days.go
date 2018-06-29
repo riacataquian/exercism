@@ -30,7 +30,7 @@ var verses = []kv{
 	{"twelfth", "twelve Drummers Drumming"},
 }
 
-// Song ...
+// Song returns the entire song.
 func Song() string {
 	lyrics := make([]string, len(verses))
 	for i := 0; i < len(verses); i++ {
@@ -39,7 +39,7 @@ func Song() string {
 	return strings.Join(lyrics, "")
 }
 
-// Verse ...
+// Verse returns the song lyric based on the verse number provided.
 func Verse(line int) string {
 	line--
 
@@ -47,7 +47,7 @@ func Verse(line int) string {
 	lyrics = append(lyrics, fmt.Sprintf(intro, verses[line].k))
 
 	if line == 0 {
-		lyrics = append(lyrics, verses[0].v)
+		lyrics = append(lyrics, verses[i].v)
 		return strings.Join(lyrics, ", ")
 	}
 
