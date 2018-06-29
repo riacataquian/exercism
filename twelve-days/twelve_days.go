@@ -1,12 +1,11 @@
-// Package twelve ...
+// Package twelve output the lyrics to 'The Twelve Days of Christmas'.
 package twelve
 
 import (
 	"fmt"
-	"strings"
 )
 
-const intro = "On the %s day of Christmas my true love gave to me"
+const intro = "On the %s day of Christmas my true love gave to me, "
 
 // kv maps a lyric component to its count.
 type kv struct {
@@ -32,30 +31,28 @@ var verses = []kv{
 
 // Song returns the entire song.
 func Song() string {
-	lyrics := make([]string, len(verses))
+	var lyrics string
 	for i := 0; i < len(verses); i++ {
-		lyrics[i] = Verse(i+1) + "\n"
+		v := Verse(i+1) + "\n"
+		lyrics += v
 	}
-	return strings.Join(lyrics, "")
+	return lyrics
 }
 
 // Verse returns the song lyric based on the verse number provided.
 func Verse(i int) string {
 	i--
+	f := verses[0].v
 
-	var lyrics []string
-	lyrics = append(lyrics, fmt.Sprintf(intro, verses[i].k))
-
+	lyrics := fmt.Sprintf(intro, verses[i].k)
 	if i == 0 {
-		lyrics = append(lyrics, verses[i].v)
-		return strings.Join(lyrics, ", ")
+		return lyrics + f
 	}
 
 	for i > 0 {
-		lyrics = append(lyrics, verses[i].v)
+		lyrics += verses[i].v + ", "
 		i--
 	}
 
-	lyrics = append(lyrics, "and "+verses[0].v)
-	return strings.Join(lyrics, ", ")
+	return lyrics + "and " + f
 }
