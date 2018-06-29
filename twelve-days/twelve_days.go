@@ -32,13 +32,11 @@ var verses = []kv{
 
 // Song ...
 func Song() string {
-	var lyrics []string
-	for i := 1; i <= len(verses); i++ {
-		lyrics = append(lyrics, Verse(i))
+	lyrics := make([]string, len(verses))
+	for i := 0; i < len(verses); i++ {
+		lyrics[i] = Verse(i+1) + "\n"
 	}
-
-	lyrics = append(lyrics, "")
-	return strings.Join(lyrics, "\n")
+	return strings.Join(lyrics, "")
 }
 
 // Verse ...
