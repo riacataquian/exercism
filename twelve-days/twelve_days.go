@@ -40,20 +40,20 @@ func Song() string {
 }
 
 // Verse returns the song lyric based on the verse number provided.
-func Verse(line int) string {
-	line--
+func Verse(i int) string {
+	i--
 
 	var lyrics []string
-	lyrics = append(lyrics, fmt.Sprintf(intro, verses[line].k))
+	lyrics = append(lyrics, fmt.Sprintf(intro, verses[i].k))
 
-	if line == 0 {
+	if i == 0 {
 		lyrics = append(lyrics, verses[i].v)
 		return strings.Join(lyrics, ", ")
 	}
 
-	for line > 0 {
-		lyrics = append(lyrics, verses[line].v)
-		line--
+	for i > 0 {
+		lyrics = append(lyrics, verses[i].v)
+		i--
 	}
 
 	lyrics = append(lyrics, "and "+verses[0].v)
