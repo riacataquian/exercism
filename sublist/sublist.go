@@ -1,66 +1,82 @@
-// Package sublist ...
+// Package sublist determines if a list is a sublist of another list.
 package sublist
 
-import (
-// "log"
-)
-
-// Relation ...
+// Relation describes a relation between two lists.
 type Relation string
 
 const (
+	// Unequal is when two lists are not equal.
 	Unequal Relation = "unequal"
-	Equal   Relation = "equal"
-	Sub     Relation = "sublist"
-	Sup     Relation = "superlist"
-	Wat     Relation = "wat"
+
+	// Equal is when two lists are equal.
+	Equal Relation = "equal"
+
+	// Sub is when a list is a sublist to another list.
+	Sub Relation = "sublist"
+
+	// Sup is when a list is a superlist to another list.
+	Sup Relation = "superlist"
 )
 
+// Sublist returns the relation between two lists.
 func Sublist(a, b []int) Relation {
-	if len(a) == 0 && len(b) == 0 {
+	diff := len(a) - len(b)
+
+	if diff == 0 && equal(a, b) {
 		return Equal
 	}
 
-	if sub(a, b) {
-		return Sub
-	}
-
-	if sup(b, a) {
+	if diff > 0 && sub(b, a) {
 		return Sup
 	}
 
-	if equal(a, b) {
-		return Equal
+	if diff < 0 && sub(a, b) {
+		return Sub
 	}
 
 	return Unequal
 }
 
-func equal(a, b []int) bool {
-	var matching int
-	for _, m := range a {
-		for _, n := range b {
+// sub returns true if a is a sublist of b.
+func sub(a, b []int) bool {
+	// An empty list is always a sublist of another list.
+	if len(a) == 0 {
+		return true
+	}
+
+	var match []int
+	isSub := false
+loop:
+	for i, m := range b {
+		for _, n := range a {
 			if m == n {
-				matching++
+				max := i + len(a)
+
+				// Traverse superlist from the current matching element's index
+				// up to the sublist length.
+				if max > len(b) {
+					match = b[i:]
+				} else {
+					match = b[i:max]
+				}
+
+				isSub = equal(match, a)
 			}
+		}
+		if isSub {
+			break loop
 		}
 	}
 
-	return matching == len(a)
+	return isSub
 }
 
-func sub(a, b []int) bool {
-	if len(a) == 0 {
-		return true
+// equal returns true if two lists are equal with the same order.
+func equal(a, b []int) bool {
+	for i, j := range a {
+		if b[i] != j {
+			return false
+		}
 	}
-
-	return false
-}
-
-func sup(a, b []int) bool {
-	if len(a) == 0 {
-		return true
-	}
-
-	return false
+	return true
 }
