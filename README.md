@@ -24,7 +24,7 @@
 - [x] Tournament
 - [x] Twelve Days
 - [ ] Matrix
-- [ ] Sublist
+- [x] Sublist
 - [ ] Error Handling
 - [ ] Flatten Array
 - [ ] Bank Account
